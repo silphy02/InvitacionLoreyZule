@@ -4,31 +4,65 @@
   <meta charset="UTF-8">
   <title>¡Mis papás se casan!</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: sans-serif;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
       background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
     }
+
     .seccion {
       text-align: center;
-      margin-bottom: 20px;
+      padding: 30px 10px;
     }
+
     .seccion img {
       width: 100%;
-      max-width: 600px;
+      max-width: 800px;
     }
-    .boton {
+
+    .botones {
+      margin-top: 20px;
+    }
+
+    .botones a {
       display: inline-block;
-      margin: 20px auto;
+      margin: 10px;
+      padding: 12px 20px;
       background-color: #ffffffcc;
-      padding: 12px 24px;
-      border-radius: 20px;
       color: #000;
       text-decoration: none;
+      border-radius: 20px;
       font-weight: bold;
-      font-family: sans-serif;
+    }
+
+    .cuenta-regresiva {
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: #fff;
+    }
+
+    .control-scroll {
+      position: fixed;
+      right: 20px;
+      bottom: 80px;
+      z-index: 1000;
+    }
+
+    .control-scroll button, .control-scroll a {
+      display: block;
+      margin: 10px 0;
+      padding: 10px 16px;
+      background-color: #ffffffcc;
+      border: none;
+      border-radius: 20px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
     }
   </style>
 </head>
@@ -40,33 +74,76 @@
     Tu navegador no soporta audio HTML5.
   </audio>
 
-  <!-- Portada -->
-  <div class="seccion">
-    <img src="assets/portada.png" alt="Portada">
+  <!-- Botones de control -->
+  <div class="control-scroll">
+    <a href="#portada">Volver al inicio</a>
+    <button onclick="toggleScroll()">Pausar/Seguir</button>
   </div>
 
-  <!-- Ceremonia -->
-  <div class="seccion">
-    <img src="assets/ceremonia.png" alt="Ceremonia">
-    <a class="boton" href="https://g.co/kgs/xPJhZt1" target="_blank">Ver Mapa Iglesia</a>
+  <!-- Contenido -->
+  <div id="portada" class="seccion"><img src="assets/portada.jpg" alt="Portada"></div>
+
+  <div class="seccion" id="fecha">
+    <img src="assets/fecha.jpg" alt="Fecha">
+    <div class="cuenta-regresiva">Faltan: <span id="countdown">...</span></div>
   </div>
 
-  <!-- Recepción -->
   <div class="seccion">
-    <img src="assets/recepcion.png" alt="Recepción">
-    <a class="boton" href="https://g.co/kgs/xPJhZt1" target="_blank">Ver Mapa Recepción</a>
+    <img src="assets/ceremonia.jpg" alt="Ceremonia">
+    <div class="botones">
+      <a href="https://g.co/kgs/xPJhZt1" target="_blank">Ver mapa ceremonia</a>
+    </div>
   </div>
 
-  <!-- Vestimenta -->
   <div class="seccion">
-    <img src="assets/vestimenta.png" alt="Vestimenta">
+    <img src="assets/recepcion.jpg" alt="Recepción">
+    <div class="botones">
+      <a href="#" target="_blank">Ver mapa recepción</a>
+    </div>
   </div>
 
-  <!-- Confirmación -->
   <div class="seccion">
-    <img src="assets/confirmacion.png" alt="Confirmación">
-    <a class="boton" href="https://forms.gle/8nnHhXvwaK43LJNV7" target="_blank">Confirmar asistencia</a>
+    <img src="assets/codigo.jpg" alt="Código de vestimenta">
+    <div class="botones">
+      <a href="https://pin.it/5Jx6azUSv" target="_blank">Hombres</a>
+      <a href="https://pin.it/7f2YRABZm" target="_blank">Mujeres</a>
+    </div>
   </div>
+
+  <div class="seccion">
+    <img src="assets/confirmar.jpg" alt="Confirmar asistencia">
+    <div class="botones">
+      <a href="https://forms.gle/8nnHhXvwaK43LJNV7" target="_blank">Confirmar aquí</a>
+    </div>
+  </div>
+
+  <div class="seccion"><img src="assets/nuestros-momentos.jpg" alt="Nuestros momentos"></div>
+  <div class="seccion"><img src="assets/final.jpg" alt="Final"></div>
+
+  <!-- Script cuenta regresiva -->
+  <script>
+    const countdown = document.getElementById('countdown');
+    const targetDate = new Date("July 5, 2025 00:00:00").getTime();
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      countdown.innerHTML = distance < 0 ? "¡Hoy es el gran día!" : days + " días";
+    }, 1000);
+  </script>
+
+  <!-- Scroll automático + botón de control -->
+  <script>
+    let scrollActivo = true;
+    let scrollStep = 1;
+    let scrollInterval = setInterval(() => {
+      if (scrollActivo) window.scrollBy(0, scrollStep);
+    }, 30);
+
+    function toggleScroll() {
+      scrollActivo = !scrollActivo;
+    }
+  </script>
 
 </body>
 </html>
